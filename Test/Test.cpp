@@ -31,7 +31,7 @@ sdl::Window w("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WID
 sdl::Renderer r(w.get(), -1, 0);
 
 void game() {
-    auto currentTick = SDL_GetTicks() / 17;
+    auto currentTick = SDL_GetTicks() / 14;
     auto playerY = 0;
     auto aiY = 0;
     auto pongX = SCREEN_WIDTH / 2;
