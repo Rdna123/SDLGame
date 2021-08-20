@@ -169,8 +169,9 @@ void game() {
 
 int main(int argc, char *argv[])
 {
+    SDL_SetMainReady();
     sdl::Init init(SDL_INIT_EVERYTHING);
-    SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
+    SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
     
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop(game, 0, 1);
