@@ -5,7 +5,7 @@
 #pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
-//#define SDL_MAIN_HANDLED
+#define SDL_MAIN_HANDLED
 
 
 
@@ -18,7 +18,6 @@
 //#include <stdio.h>
 #include "include/sdlpp/sdlpp.hpp"
 
-#undef main
 
 //TODO: ADD sdl2_tff
 
@@ -168,7 +167,7 @@ void game() {
 #endif
 }
 
-int main(int argc, char* args[])
+int main(int argc, char *argv[])
 {
     sdl::Init init(SDL_INIT_EVERYTHING);
     SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
