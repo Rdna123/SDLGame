@@ -4,3 +4,4 @@
 [submodule "Test/include/sdlpp"]
 	path = Test/include/sdlpp
 	url = https://github.com/Rdna123/sdlpp.git
+	branch = master
