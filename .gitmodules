@@ -1,3 +1,6 @@
+[submodule "Test/include/--force"]
+	path = Test/include/--force
+	url = https://github.com/Rdna123/sdlpp.git
 [submodule "Test/include/sdlpp"]
 	path = Test/include/sdlpp
-	url = https://github.com/mika314/sdlpp.git
+	url = https://github.com/Rdna123/sdlpp.git
