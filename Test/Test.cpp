@@ -6,7 +6,7 @@
 #endif
 
 #define SDL_MAIN_HANDLED
-
+//#define SDLMain main
 
 
 #ifdef __EMSCRIPTEN__
@@ -17,9 +17,10 @@
 
 //#include <stdio.h>
 #include "include/sdlpp/sdlpp.hpp"
+#include "SDL2/SDL_ttf.h"
 
 
-//TODO: ADD sdl2_tff
+//TODO: Implement fonts and replace scrore with numbers
 
 static const int SCREEN_WIDTH = 1280 / 2;
 static const int SCREEN_HEIGHT = 720 / 2;
@@ -167,11 +168,14 @@ void game() {
 #endif
 }
 
+#ifdef __cplusplus
+ extern "C"
+#endif
 int main(int argc, char *argv[])
 {
-    SDL_SetMainReady();
     sdl::Init init(SDL_INIT_EVERYTHING);
     SDL_SetHint(SDL_HINT_RENDER_VSYNC, "1");
+
     
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop(game, 0, 1);
