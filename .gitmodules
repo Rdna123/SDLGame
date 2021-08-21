@@ -1,0 +1,3 @@
+[submodule "Test/include/sdlpp"]
+	path = Test/include/sdlpp
+	url = https://github.com/mika314/sdlpp.git
