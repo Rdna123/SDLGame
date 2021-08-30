@@ -2,4 +2,4 @@ g++ -c *.cpp -std=c++14 -O3 -Wall -m64 -I include && mkdir -p bin/release && g++
 ldd mygtkapp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .
 
 bash:
-docker run   --rm   -v $(pwd):/src   -u $(id -u):$(id -g)   emscripten/emsdk   emcc Test.cpp -o index.html -s USE_SDL=2
+docker run   --rm   -v $(pwd):/src   -u $(id -u):$(id -g)   emscripten/emsdk   emcc Test.cpp Spawn.cpp -o index.html -s USE_SDL=2
