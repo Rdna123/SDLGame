@@ -9,6 +9,7 @@
 //#define SDLMain main
 
 
+
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif 
@@ -17,41 +18,42 @@
 
 //#include <stdio.h>
 #include "include/sdlpp/sdlpp.hpp"
-#include "SDL2/SDL_ttf.h"
+//#include "SDL2/SDL_ttf.h"
 
+
+#include "Spawn.h"
 
 //TODO: Implement fonts and replace scrore with numbers
 
 static const int SCREEN_WIDTH = 1280 / 2;
 static const int SCREEN_HEIGHT = 720 / 2;
 
-static const int SCALE = SCREEN_HEIGHT / 4;
+//static const int SCALE = SCREEN_HEIGHT / 4;
 
-sdl::Window w("Pong", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+sdl::Window w("Mother V!negar", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 sdl::Renderer r(w.get(), -1, 0);
+
+
+
 
 void game() {
     auto currentTick = SDL_GetTicks() / 14;
-    auto playerY = 0;
-    auto aiY = 0;
-    auto pongX = SCREEN_WIDTH / 2;
-    auto pongY = SCREEN_HEIGHT / 2;
-    auto pongVX = 5;
-    auto pongVY = 5;
-    auto aiScore = 0;
-    auto playerScore = 0;
+    const int playerY = SCREEN_HEIGHT/2;
+    const int aiY = SCREEN_HEIGHT/2;
+    int aiScore = 0;
+    int playerScore = 0;
     sdl::EventHandler e;
-    /*e.mouseMotion = [&playerY](const SDL_MouseMotionEvent& e)
-    {
-        playerY = e.y - 50;
-    };*/
-    auto done = false;
+
+    Spawn player("Player");
+    Spawn ai("AI");
+
+    bool done = false;
     e.quit = [&done](const SDL_QuitEvent&)
     {
         done = true;
     };
 
-    auto paused = false;
+    bool paused = false;
     e.keyDown = [&paused](const SDL_KeyboardEvent& e) {
         if (e.keysym.sym == SDLK_ESCAPE) {
             paused = !paused;
@@ -84,69 +86,23 @@ void game() {
 
 
                 if (keystate[SDL_SCANCODE_UP]) {
-                    playerY -= 4;
                 }
                 if (keystate[SDL_SCANCODE_DOWN]) {
-                    playerY += 4;
                 }
-                if (playerY < 0) {
-                    playerY = 0;
-                }
-                if (playerY > SCREEN_HEIGHT - SCALE) {
-                    playerY = SCREEN_HEIGHT - SCALE;
-                }
-                pongX += pongVX;
-                pongY += pongVY;
-                if (pongY < 0 && pongVY < 0)
-                    pongVY *= -1;
-                if (pongY > SCREEN_HEIGHT && pongVY > 0)
-                    pongVY *= -1;
-                if (pongX < 0  && pongVX < 0)
-                {
-                    pongVX *= -1;
-                    if (pongY < playerY || pongY > playerY + SCALE)
-                    {
-                        aiScore++;
-                        pongX = SCREEN_WIDTH / 2;
-                        pongY = SCREEN_HEIGHT / 2;
-                    }
-                }
-                if (pongX > SCREEN_WIDTH  && pongVX > 0)
-                {
-                    pongVX *= -1;
-                    if (pongY < aiY || pongY > aiY + SCALE)
-                    {
-                        playerScore++;
-                        pongX = SCREEN_WIDTH / 2;
-                        pongY = SCREEN_HEIGHT / 2;
-                    }
-                }
-                if (aiY + 50 < pongY) {
-                    aiY += 4;
-                }
-                else {
-                    aiY -= 4;
-                }
-                if (aiY < 0) {
-                    aiY = 0;
-                }
-                if (aiY > SCREEN_HEIGHT - SCALE) {
-                    aiY = SCREEN_HEIGHT - SCALE;
-                }
+               
+               
+                
             }
             r.setDrawColor(0x53, 0xa3, 0x73, 0xff);
             r.clear();
             r.setDrawColor(0xff, 0xff, 0xff, 0xff);
             SDL_Rect rect;
 
-            rect = { 0, playerY, 10, SCALE };
+            rect = { 10, playerY, 20, 20 };
             r.fillRect(&rect);
-            rect = { SCREEN_WIDTH - 10, aiY, 10, SCALE };
+            rect = { SCREEN_WIDTH - 30, aiY, 20, 20 };
             r.fillRect(&rect);
 
-            r.setDrawColor(0xd9, 0x48, 0x48, 0xff);
-            rect = { pongX - 10, pongY - 10, 20, 20 };
-            r.fillRect(&rect);
 
             r.setDrawColor(0x9c, 0xa8, 0xf7, 0xff);
             for (auto i = 0; i < playerScore; ++i)
@@ -168,9 +124,7 @@ void game() {
 #endif
 }
 
-#ifdef __cplusplus
- extern "C"
-#endif
+
 int main(int argc, char *argv[])
 {
     sdl::Init init(SDL_INIT_EVERYTHING);
@@ -196,3 +150,5 @@ int main(int argc, char *argv[])
 //   4. Use the Error List window to view errors
 //   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
 //   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+
+
