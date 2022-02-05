@@ -1,5 +1,5 @@
-g++ -c *.cpp -std=c++14 -O3 -Wall -m64 -I include && mkdir -p bin/release && g++ *.o -o bin/release/main -s -lSDL2main -lSDL2
-ldd mygtkapp.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .
+g++ -c *.cpp -std=c++14 -O3 -Wall -m64 -I include && mkdir -p bin/release && g++ *.o -o bin/release/game -s -lmingw32 -lSDL2main -lSDL2
+ldd ./bin/release/game.exe | grep '\/mingw.*\.dll' -o | xargs -I{} cp "{}" .
 
 bash:
 docker run   --rm   -v $(pwd):/src   -u $(id -u):$(id -g)   emscripten/emsdk   emcc Test.cpp Spawn.cpp -o index.html -s USE_SDL=2
